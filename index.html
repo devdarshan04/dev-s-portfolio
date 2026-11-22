@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dev Darshan G | Software Developer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-red: #ff2a3a;
+      --deep-red: #d31225;
+      --neon-glow: rgba(255, 42, 58, 0.4);
+      --card-border: rgba(255, 42, 58, 0.28);
+      --card-border-hover: rgba(255, 42, 58, 0.7);
+      --text-main: #ffffff;
+      --text-muted: #cbd5e1;
+      --text-dim: #94a3b8;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      background-color: #000000;
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      scroll-behavior: auto;
+      overflow-x: hidden;
+    }
+
+    body {
+      background-color: transparent;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9), 0 0 24px rgba(0, 0, 0, 0.85);
+    }
+
+    /* Fixed Background Canvas for Scroll Animation - 100% Unobstructed */
+    #canvas-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    #canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Main Foreground Content Layer Directly on Background */
+    .content-container {
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 36px 28px 140px;
+    }
+
+    /* Top Navigation Header */
+    .top-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 30px;
+      font-size: 0.82rem;
+      letter-spacing: 1.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .header-role {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .header-role .red-text {
+      color: var(--primary-red);
+      text-shadow: 0 0 12px var(--neon-glow);
+    }
+
+    .header-status {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #f1f5f9;
+      font-size: 0.8rem;
+    }
+
+    .header-status .plus-icon {
+      color: var(--primary-red);
+      font-weight: 900;
+      font-size: 1.1rem;
+      text-shadow: 0 0 10px var(--neon-glow);
+    }
+
+    /* Hero Section */
+    .hero-section {
+      position: relative;
+      margin-top: 40px;
+      margin-bottom: 90px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      align-items: center;
+      gap: 40px;
+    }
+
+    /* Giant Background Watermark Text */
+    .hero-watermark {
+      position: absolute;
+      top: -45px;
+      left: 0;
+      font-size: clamp(3.8rem, 8vw, 6.8rem);
+      font-weight: 900;
+      color: transparent;
+      -webkit-text-stroke: 1.2px rgba(230, 20, 40, 0.4);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      pointer-events: none;
+      white-space: nowrap;
+      z-index: -1;
+      line-height: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding-top: 20px;
+    }
+
+    .hero-script {
+      font-family: 'Caveat', cursive;
+      color: #ff3b4b;
+      font-size: 2.6rem;
+      font-weight: 700;
+      line-height: 1.1;
+      transform: rotate(-2deg);
+      display: inline-block;
+      margin-bottom: 4px;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.9), 0 0 15px rgba(255, 42, 58, 0.5);
+    }
+
+    .hero-name {
+      font-size: clamp(2.8rem, 5vw, 4.2rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      line-height: 1.05;
+      color: #ffffff;
+      margin-bottom: 10px;
+      text-shadow: 0 3px 15px rgba(0, 0, 0, 0.95);
+    }
+
+    .hero-degree {
+      font-size: 1.15rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #f1f5f9;
+      margin-bottom: 18px;
+    }
+
+    .hero-desc {
+      font-size: 0.98rem;
+      color: #e2e8f0;
+      line-height: 1.65;
+      max-width: 520px;
+    }
+
+    /* Code Terminal Box - Transparent Direct on Background */
+    .code-terminal {
+      background: transparent;
+      border: 1px solid rgba(255, 42, 58, 0.45);
+      border-radius: 12px;
+      padding: 20px 22px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.88rem;
+      position: relative;
+      box-shadow: 0 0 25px rgba(255, 42, 58, 0.15);
+      transition: all 0.3s ease;
+    }
+
+    .code-terminal:hover {
+      border-color: rgba(255, 42, 58, 0.8);
+      box-shadow: 0 0 35px rgba(255, 42, 58, 0.3);
+    }
+
+    .terminal-dots {
+      display: flex;
+      gap: 7px;
+      margin-bottom: 16px;
+    }
+
+    .terminal-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .dot-red { background: #ff5f56; }
+    .dot-yellow { background: #ffbd2e; }
+    .dot-green { background: #27c93f; }
+
+    .code-line {
+      display: flex;
+      gap: 16px;
+      line-height: 1.7;
+    }
+
+    .code-num {
+      color: #64748b;
+      user-select: none;
+      width: 14px;
+      text-align: right;
+    }
+
+    .code-text {
+      color: #ffffff;
+      text-shadow: 0 1px 8px rgba(0, 0, 0, 0.95);
+    }
+
+    .code-keyword { color: #ff3366; font-weight: 600; }
+    .code-fn { color: #38bdf8; }
+    .code-str { color: #fbbf24; }
+    .code-var { color: #f8fafc; }
+
+    .terminal-corner-badge {
+      position: absolute;
+      bottom: -18px;
+      right: 25px;
+      color: var(--primary-red);
+      font-size: 1.4rem;
+      font-weight: 800;
+      text-shadow: 0 0 15px var(--primary-red);
+    }
+
+    /* Section Headers */
+    .section-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
+    }
+
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(255, 42, 58, 0.6) 0%, rgba(255, 42, 58, 0.05) 100%);
+    }
+
+    /* Selected Projects Grid - Transparent Direct on Background */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+      margin-bottom: 80px;
+    }
+
+    .project-card {
+      background: transparent;
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 24px;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .project-card:hover {
+      border-color: var(--card-border-hover);
+      box-shadow: 0 0 25px rgba(255, 42, 58, 0.25);
+      transform: translateY(-4px);
+    }
+
+    .card-icon-wrap {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(255, 42, 58, 0.1);
+      border: 1px solid rgba(255, 42, 58, 0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      color: var(--primary-red);
+      box-shadow: 0 0 15px rgba(255, 42, 58, 0.2);
+    }
+
+    .project-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #ffffff;
+      margin-bottom: 6px;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
+    }
+
+    .project-subtitle {
+      font-size: 0.88rem;
+      color: #cbd5e1;
+      line-height: 1.4;
+      margin-bottom: 20px;
+      min-height: 38px;
+    }
+
+    .project-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      border: 1px solid rgba(255, 42, 58, 0.38);
+      border-radius: 6px;
+      padding: 6px 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #f1f5f9;
+      margin-bottom: 16px;
+      align-self: flex-start;
+      box-shadow: 0 0 10px rgba(255, 42, 58, 0.15);
+    }
+
+    .project-desc {
+      font-size: 0.88rem;
+      color: #cbd5e1;
+      line-height: 1.55;
+      margin-top: auto;
+    }
+
+    /* Middle Row: 3 Columns - Transparent Direct on Background */
+    .middle-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr 0.9fr;
+      gap: 24px;
+      margin-bottom: 80px;
+    }
+
+    .info-card {
+      background: transparent;
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 26px;
+      transition: all 0.3s ease;
+    }
+
+    .info-card:hover {
+      border-color: var(--card-border-hover);
+      box-shadow: 0 0 25px rgba(255, 42, 58, 0.2);
+    }
+
+    .sub-heading {
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: var(--primary-red);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      display: block;
+      text-shadow: 0 0 10px var(--neon-glow);
+    }
+
+    .edu-degree {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+
+    .edu-inst {
+      font-size: 0.88rem;
+      color: #cbd5e1;
+      line-height: 1.45;
+      margin-bottom: 26px;
+    }
+
+    /* Skills Pill Cloud */
+    .skills-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .skill-pill {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 20px;
+      padding: 5px 13px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: #f1f5f9;
+      transition: all 0.2s ease;
+    }
+
+    .skill-pill:hover {
+      border-color: var(--primary-red);
+      color: #ffffff;
+      box-shadow: 0 0 12px rgba(255, 42, 58, 0.35);
+      transform: translateY(-1px);
+    }
+
+    /* Work Process List */
+    .process-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .process-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .process-icon-wrap {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 42, 58, 0.45);
+      background: rgba(255, 42, 58, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary-red);
+      flex-shrink: 0;
+      box-shadow: 0 0 10px rgba(255, 42, 58, 0.2);
+    }
+
+    .process-texts {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .process-name {
+      font-size: 0.9rem;
+      font-weight: 800;
+      color: var(--primary-red);
+      letter-spacing: 0.5px;
+      text-shadow: 0 0 8px var(--neon-glow);
+    }
+
+    .process-sub {
+      font-size: 0.78rem;
+      color: #cbd5e1;
+    }
+
+    /* Quote Card */
+    .quote-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+    }
+
+    .quote-icon {
+      font-size: 3.4rem;
+      color: var(--primary-red);
+      line-height: 1;
+      margin-bottom: 16px;
+      font-family: Georgia, serif;
+      text-shadow: 0 0 20px var(--neon-glow);
+    }
+
+    .quote-text {
+      font-size: 1.38rem;
+      font-weight: 700;
+      line-height: 1.45;
+      color: #ffffff;
+      margin-bottom: 24px;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.95);
+    }
+
+    .quote-line {
+      width: 44px;
+      height: 3px;
+      background: var(--primary-red);
+      border-radius: 2px;
+      box-shadow: 0 0 10px var(--primary-red);
+    }
+
+    /* Bottom Section: Achievements & CTA */
+    .bottom-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .achievements-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .achievement-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 0.9rem;
+      color: #e2e8f0;
+      line-height: 1.45;
+    }
+
+    .achievement-star {
+      color: var(--primary-red);
+      font-size: 1.05rem;
+      line-height: 1.2;
+      flex-shrink: 0;
+      text-shadow: 0 0 8px var(--neon-glow);
+    }
+
+    /* CTA Card - Transparent Direct on Background */
+    .cta-card {
+      background: transparent;
+      border: 1px solid rgba(255, 42, 58, 0.5);
+      border-radius: 12px;
+      padding: 32px 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 25px rgba(255, 42, 58, 0.15);
+      transition: all 0.3s ease;
+    }
+
+    .cta-card:hover {
+      border-color: rgba(255, 42, 58, 0.9);
+      box-shadow: 0 0 35px rgba(255, 42, 58, 0.35);
+    }
+
+    .cta-sub {
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #ffffff;
+      margin-bottom: 6px;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
+    }
+
+    .cta-main {
+      font-size: clamp(1.8rem, 3.2vw, 2.5rem);
+      font-weight: 900;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--primary-red);
+      line-height: 1.1;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-shadow: 0 0 25px rgba(255, 42, 58, 0.55);
+    }
+
+    .cta-arrows {
+      color: var(--primary-red);
+      letter-spacing: -2px;
+    }
+
+    /* Minimalist Sleek Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #000000;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #2a2a2a;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--primary-red);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 980px) {
+      .hero-section {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+      .middle-grid {
+        grid-template-columns: 1fr;
+      }
+      .bottom-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Fixed Fullscreen Canvas for Scroll Animation - 100% Raw and Direct -->
+  <div id="canvas-container">
+    <canvas id="canvas"></canvas>
+  </div>
+
+  <!-- Foreground Content Layers Placed Directly on the Canvas Background -->
+  <div class="content-container">
+    <!-- Top Header -->
+    <header class="top-header">
+      <div class="header-role">
+        <span class="red-text">SOFTWARE DEVELOPER</span>
+        <span>|</span>
+        <span>AI &amp; WEB TECHNOLOGY</span>
+      </div>
+      <div class="header-status">
+        <span>AVAILABLE FOR PROJECTS</span>
+        <span class="plus-icon">+</span>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-watermark">DEV DARSHAN G</div>
+
+      <div class="hero-content">
+        <div class="hero-script">Hello, I'm</div>
+        <h1 class="hero-name">DEV DARSHAN G</h1>
+        <div class="hero-degree">B.TECH INFORMATION TECHNOLOGY</div>
+        <p class="hero-desc">
+          Building practical web, AI and hardware-based solutions while strengthening Python, Java and problem-solving skills.
+        </p>
+      </div>
+
+      <!-- Code Terminal Preview Box -->
+      <div class="code-terminal">
+        <div class="terminal-dots">
+          <div class="terminal-dot dot-red"></div>
+          <div class="terminal-dot dot-yellow"></div>
+          <div class="terminal-dot dot-green"></div>
+        </div>
+        <div class="code-line">
+          <span class="code-num">1</span>
+          <span class="code-text"><span class="code-keyword">def</span> <span class="code-fn">innovate</span>():</span>
+        </div>
+        <div class="code-line">
+          <span class="code-num">2</span>
+          <span class="code-text">&nbsp;&nbsp;<span class="code-var">ideas</span> = [<span class="code-str">"Build"</span>, <span class="code-str">"Improve"</span>, <span class="code-str">"Grow"</span>]</span>
+        </div>
+        <div class="code-line">
+          <span class="code-num">3</span>
+          <span class="code-text">&nbsp;&nbsp;<span class="code-keyword">for</span> <span class="code-var">idea</span> <span class="code-keyword">in</span> <span class="code-var">ideas</span>:</span>
+        </div>
+        <div class="code-line">
+          <span class="code-num">4</span>
+          <span class="code-text">&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-fn">create_better_tomorrow</span>(<span class="code-var">idea</span>)</span>
+        </div>
+        <div class="code-line">
+          <span class="code-num">5</span>
+          <span class="code-text">&nbsp;&nbsp;<span class="code-keyword">return</span> <span class="code-str">"Dream Big"</span></span>
+        </div>
+        <div class="terminal-corner-badge">&lt;/&gt;</div>
+      </div>
+    </section>
+
+    <!-- Selected Projects Section -->
+    <section class="section-block">
+      <h2 class="section-title">SELECTED PROJECTS</h2>
+      <div class="projects-grid">
+        <!-- Project 1: NEXUS -->
+        <div class="project-card">
+          <div class="card-icon-wrap">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+              <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+              <line x1="12" x2="12" y1="19" y2="22"/>
+            </svg>
+          </div>
+          <h3 class="project-title">NEXUS</h3>
+          <p class="project-subtitle">AI Voice Assistant for Smart Desktop Automation</p>
+          <div class="project-tag">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M11.95 2C6.46 2 6.8 4.38 6.8 4.38l.01 2.47h5.24v.74H4.37S2 7.2 2 12.69c0 5.49 2.06 5.28 2.06 5.28h1.23v-1.74s-.07-2.06 2.06-2.06h5.36s1.99.03 1.99-1.92V7.12S15.17 2 11.95 2zM9.54 3.7a.88.88 0 1 1 0 1.76.88.88 0 0 1 0-1.76zM12.05 22c5.49 0 5.15-2.38 5.15-2.38l-.01-2.47h-5.24v-.74h7.68s2.37.39 2.37-5.1c0-5.49-2.06-5.28-2.06-5.28h-1.23v1.74s.07 2.06-2.06 2.06h-5.36s-1.99-.03-1.99 1.92v5.13S8.83 22 12.05 22zm2.41-1.7a.88.88 0 1 1 0-1.76.88.88 0 0 1 0 1.76z"/>
+            </svg>
+            Python
+          </div>
+          <p class="project-desc">Voice-based desktop tasks, time functions, Wikipedia information retrieval.</p>
+        </div>
+
+        <!-- Project 2: KARIGARAI -->
+        <div class="project-card">
+          <div class="card-icon-wrap">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/>
+              <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
+              <path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"/>
+              <path d="M2 7h20"/>
+            </svg>
+          </div>
+          <h3 class="project-title">KARIGARAI</h3>
+          <p class="project-subtitle">AI-Powered Virtual Business Manager</p>
+          <div class="project-tag">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M1.5 0h21l-1.91 21.563L11.977 24l-8.564-2.438L1.5 0zm7.031 9.75l-.232-2.718h11.232l.24-2.656H5.414l.71 8.031h8.625l-.337 3.75-2.435.656-2.438-.656-.156-1.781H6.719l.3 3.562 4.958 1.375 4.97-1.375.687-7.688H8.531z"/>
+            </svg>
+            HTML, CSS, JavaScript, AI/ML
+          </div>
+          <p class="project-desc">Digital product catalogs, multilingual support, pricing assistance, buyer matching.</p>
+        </div>
+
+        <!-- Project 3: SMART IRRIGATION SYSTEM -->
+        <div class="project-card">
+          <div class="card-icon-wrap">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+            </svg>
+          </div>
+          <h3 class="project-title">SMART IRRIGATION SYSTEM</h3>
+          <p class="project-subtitle">Automated Hardware &amp; Sensor Architecture</p>
+          <div class="project-tag">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="6.5" cy="12" r="4.5"/>
+              <circle cx="17.5" cy="12" r="4.5"/>
+            </svg>
+            Arduino, C/C++
+          </div>
+          <p class="project-desc">Automated irrigation based on soil conditions.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Middle Row: Education & Skills, Work Process, Quote -->
+    <div class="middle-grid">
+      <!-- Column 1: Education & Skills -->
+      <div class="info-card">
+        <h2 class="section-title" style="margin-bottom: 18px;">EDUCATION &amp; SKILLS</h2>
+        
+        <span class="sub-heading">EDUCATION</span>
+        <div class="edu-degree">B.Tech Information Technology</div>
+        <div class="edu-inst">Nehru Institute of Engineering and Technology, Coimbatore, 2026 - Present</div>
+
+        <span class="sub-heading">SKILLS</span>
+        <div class="skills-cloud">
+          <span class="skill-pill">Python</span>
+          <span class="skill-pill">Java</span>
+          <span class="skill-pill">HTML</span>
+          <span class="skill-pill">CSS</span>
+          <span class="skill-pill">JavaScript</span>
+          <span class="skill-pill">Data Structures &amp; Algorithms</span>
+          <span class="skill-pill">Git</span>
+          <span class="skill-pill">GitHub</span>
+          <span class="skill-pill">VS Code</span>
+          <span class="skill-pill">Artificial Intelligence</span>
+          <span class="skill-pill">Microsoft Azure</span>
+        </div>
+      </div>
+
+      <!-- Column 2: Work Process -->
+      <div class="info-card">
+        <h2 class="section-title" style="margin-bottom: 18px;">WORK PROCESS</h2>
+        <div class="process-list">
+          <div class="process-item">
+            <div class="process-icon-wrap">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <circle cx="11" cy="11" r="8"/>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+              </svg>
+            </div>
+            <div class="process-texts">
+              <span class="process-name">Explore</span>
+              <span class="process-sub">Understand &amp; Analyze</span>
+            </div>
+          </div>
+
+          <div class="process-item">
+            <div class="process-icon-wrap">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                <line x1="16" y1="2" x2="16" y2="6"/>
+                <line x1="8" y1="2" x2="8" y2="6"/>
+                <line x1="3" y1="10" x2="21" y2="10"/>
+              </svg>
+            </div>
+            <div class="process-texts">
+              <span class="process-name">Plan</span>
+              <span class="process-sub">Plan How to Build</span>
+            </div>
+          </div>
+
+          <div class="process-item">
+            <div class="process-icon-wrap">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="16 18 22 12 16 6"/>
+                <polyline points="8 6 2 12 8 18"/>
+              </svg>
+            </div>
+            <div class="process-texts">
+              <span class="process-name">Build</span>
+              <span class="process-sub">Develop the Solution</span>
+            </div>
+          </div>
+
+          <div class="process-item">
+            <div class="process-icon-wrap">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                <polyline points="22 4 12 14.01 9 11.01"/>
+              </svg>
+            </div>
+            <div class="process-texts">
+              <span class="process-name">Test</span>
+              <span class="process-sub">Ensure Quality</span>
+            </div>
+          </div>
+
+          <div class="process-item">
+            <div class="process-icon-wrap">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="m12 15 2 2 4-4"/>
+                <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/>
+                <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/>
+              </svg>
+            </div>
+            <div class="process-texts">
+              <span class="process-name">Improve</span>
+              <span class="process-sub">Enhance Performance</span>
+            </div>
+          </div>
+
+          <div class="process-item">
+            <div class="process-icon-wrap">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="m7.5 4.27 9 5.15"/>
+                <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/>
+                <path d="m3.3 7 8.7 5 8.7-5"/>
+                <path d="M12 22V12"/>
+              </svg>
+            </div>
+            <div class="process-texts">
+              <span class="process-name">Deliver</span>
+              <span class="process-sub">Share the Impact</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Column 3: Quote Card -->
+      <div class="info-card quote-card">
+        <div class="quote-icon">“</div>
+        <p class="quote-text">Good technology turns ideas into useful experiences.</p>
+        <div class="quote-line"></div>
+      </div>
+    </div>
+
+    <!-- Bottom Section: Achievements & Call To Action -->
+    <div class="bottom-grid">
+      <!-- Left: Achievements -->
+      <div class="info-card">
+        <h2 class="section-title" style="margin-bottom: 20px;">ACHIEVEMENTS</h2>
+        <div class="achievements-list">
+          <div class="achievement-item">
+            <span class="achievement-star">&#10022;</span>
+            <span>Hackathon participation and AI-driven project solutions</span>
+          </div>
+          <div class="achievement-item">
+            <span class="achievement-star">&#10022;</span>
+            <span>Karate Black Belt with International, State, District and Zonal participation</span>
+          </div>
+          <div class="achievement-item">
+            <span class="achievement-star">&#10022;</span>
+            <span>Gymnastics District-level participation</span>
+          </div>
+          <div class="achievement-item">
+            <span class="achievement-star">&#10022;</span>
+            <span>Athletics Zonal-level participation</span>
+          </div>
+          <div class="achievement-item">
+            <span class="achievement-star">&#10022;</span>
+            <span>Drawing competition certificates</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Call to Action -->
+      <div class="cta-card">
+        <div class="cta-sub">LET'S BUILD SOMETHING</div>
+        <div class="cta-main">
+          <span>GREAT TOGETHER.</span>
+          <span class="cta-arrows">&gt;&gt;&gt;</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Smooth Scroll Animation Script -->
+  <script>
+    (function () {
+      const TOTAL_FRAMES = 300;
+      const FRAME_PATH = index => `frames/ezgif-frame-${String(index + 1).padStart(3, '0')}.jpg`;
+
+      const canvas = document.getElementById('canvas');
+      const ctx = canvas.getContext('2d', { alpha: false });
+
+      const images = new Array(TOTAL_FRAMES);
+
+      let targetProgress = 0;
+      let currentProgress = 0;
+      let lastRenderedIndex = -1;
+      let needsRedraw = true;
+      const LERP_FACTOR = 0.12;
+
+      // Handle DPR-aware canvas resize
+      function handleResize() {
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = Math.round(window.innerWidth * dpr);
+        canvas.height = Math.round(window.innerHeight * dpr);
+        needsRedraw = true;
+      }
+
+      window.addEventListener('resize', handleResize, { passive: true });
+
+      // Render image centered with aspect ratio containment
+      function renderImage(img) {
+        if (!img || !img.complete || !img.naturalWidth) return;
+
+        ctx.fillStyle = '#000000';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        const imgW = img.naturalWidth;
+        const imgH = img.naturalHeight;
+        const canvasRatio = canvas.width / canvas.height;
+        const imgRatio = imgW / imgH;
+
+        let drawW, drawH, drawX, drawY;
+
+        if (canvasRatio > imgRatio) {
+          drawH = canvas.height;
+          drawW = canvas.height * imgRatio;
+          drawX = (canvas.width - drawW) / 2;
+          drawY = 0;
+        } else {
+          drawW = canvas.width;
+          drawH = canvas.width / imgRatio;
+          drawX = 0;
+          drawY = (canvas.height - drawH) / 2;
+        }
+
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = 'high';
+        ctx.drawImage(img, drawX, drawY, drawW, drawH);
+      }
+
+      // Find closest loaded frame
+      function getBestLoadedFrame(targetIndex) {
+        if (images[targetIndex] && images[targetIndex].complete && images[targetIndex].naturalWidth > 0) {
+          return targetIndex;
+        }
+
+        for (let dist = 1; dist < TOTAL_FRAMES; dist++) {
+          const prev = targetIndex - dist;
+          if (prev >= 0 && images[prev] && images[prev].complete && images[prev].naturalWidth > 0) {
+            return prev;
+          }
+          const next = targetIndex + dist;
+          if (next < TOTAL_FRAMES && images[next] && images[next].complete && images[next].naturalWidth > 0) {
+            return next;
+          }
+        }
+        return -1;
+      }
+
+      // Preload images asynchronously
+      function preloadImages() {
+        for (let i = 0; i < TOTAL_FRAMES; i++) {
+          const img = new Image();
+          img.src = FRAME_PATH(i);
+          img.onload = () => {
+            needsRedraw = true;
+          };
+          images[i] = img;
+        }
+      }
+
+      // Main continuous animation loop synchronized to document scroll
+      function animationLoop() {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+        const scrollHeight = Math.max(
+          document.documentElement.scrollHeight,
+          document.body.scrollHeight
+        );
+        const maxScroll = scrollHeight - window.innerHeight;
+
+        targetProgress = maxScroll > 0 ? Math.min(1, Math.max(0, scrollTop / maxScroll)) : 0;
+
+        // Smooth physics interpolation
+        const diff = targetProgress - currentProgress;
+        if (Math.abs(diff) > 0.0001) {
+          currentProgress += diff * LERP_FACTOR;
+          needsRedraw = true;
+        } else if (currentProgress !== targetProgress) {
+          currentProgress = targetProgress;
+          needsRedraw = true;
+        }
+
+        // Determine frame
+        const targetIndex = Math.min(
+          TOTAL_FRAMES - 1,
+          Math.max(0, Math.round(currentProgress * (TOTAL_FRAMES - 1)))
+        );
+
+        const bestIndex = getBestLoadedFrame(targetIndex);
+
+        if (bestIndex !== -1 && (bestIndex !== lastRenderedIndex || needsRedraw)) {
+          const img = images[bestIndex];
+          if (img && img.complete && img.naturalWidth > 0) {
+            renderImage(img);
+            lastRenderedIndex = bestIndex;
+            needsRedraw = false;
+          }
+        }
+
+        requestAnimationFrame(animationLoop);
+      }
+
+      // Initialize
+      handleResize();
+      preloadImages();
+      requestAnimationFrame(animationLoop);
+    })();
+  </script>
+</body>
+</html>
